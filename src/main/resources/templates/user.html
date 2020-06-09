@@ -1,0 +1,399 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, shrink-to-fit=no">
+    <title>Me</title>
+    <style>
+            * {
+                transition: all 0.4s;
+            }
+
+            html, body {
+                height: 100%;
+                margin: 0; padding: 0;
+                background-color: #fefefe;
+                font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+                color: #666;
+                scroll-behavior: smooth;
+            }
+
+            #main {
+                min-height: 100%;
+                width: 100%;
+            }
+
+            .container {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: space-evenly;
+            }
+
+            .link {
+                color: #666;
+                text-decoration: none;
+                cursor: pointer;
+            }
+
+            .link:hover {
+                color: rgb(255, 87, 87);
+            }
+
+            .dark {
+                color: #aaa;
+            }
+
+            .dark:hover {
+                color: #aaa;
+            }
+
+            #side-bar {
+                position: fixed;
+                width: 280px;
+                height: calc(100%);
+                background-color: white;
+                border-right: 0.5px solid #ddd;
+                transform: translateX(-240px);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+            #side-bar:hover {
+                transform: translateX(0px);
+            }
+
+            #side-bar-main {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            #side-bar-sub {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                margin-bottom: 20px;
+            }
+
+            .side-bar-section {
+                width: calc(100%-80px);
+                padding-left: 40px;
+                padding-right: 40px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                /* background-color: red; */
+            }
+
+            .side-bar-section-row {
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 40px;
+                margin-top: 5px;
+                margin-bottom: 5px;
+            }
+
+            .side-bar-icon {
+                height: 25px;
+            }
+
+            #user {
+                margin-top: 40px;
+            }
+
+            #user-name {
+                margin-top: 10px;
+                margin-bottom: 10px;
+            }
+
+            .short-divider {
+                border-bottom: 0.5px #bbb solid;
+                width: 70%;
+                margin: 10px;
+            }
+
+            #container {
+                /* transform: translateY(-30px); */
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+            }
+
+            #main-menu {
+                min-height: 500px;
+                width: 100%;
+                max-width: 1080px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                margin-right: 20px;
+            }
+
+
+            #main-menu-title {
+                font-size: 200%;
+                margin: 20px;
+            }
+
+            .main-menu-text {
+                font-size: 140%;
+            }
+
+            #log-out {
+                border: none;
+                background-color: white;
+                font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+                font-size: 100%;
+                outline: none;
+            }
+
+            .sub-link {
+                color: #bbb;
+                text-decoration: none;
+            }
+
+            .sub-link:hover {
+                color:rgb(255, 87, 87);
+            }
+
+            .input {
+                font-size: large;
+                color: #666;
+                width: 200px;
+                border: none;
+                outline: none;
+                background-color: white;
+                font-family: 'Courier New', Courier, monospace;                
+                border-bottom: #666 2px solid;
+                margin-left: 10px;
+                /* background-color: springgreen; */
+            }
+
+            .input:focus {
+                border-bottom: rgb(255, 87, 87) 2px solid;
+            }
+
+            .submit {
+                display: inline-block;
+                border: none;
+                background-color: none;
+                cursor: pointer;
+                font-size: 100%;
+                outline: none;
+                color: #666;
+                background-color: white;
+                font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+                /* background-color: rgb(255, 87, 87); */
+            }
+
+            .submit:hover {
+                color:rgb(255, 87, 87);
+            }
+
+            label {
+                display: inline-block;
+                width: 150px;
+                text-align: right;
+                /* background-color: rosybrown; */
+            }
+
+            .field {
+                margin-bottom: 10px;
+                /* background-color: rgb(255, 87, 87); */
+            }
+
+            .submit-field {
+                display: flex;
+                flex-direction: column;
+                align-items: center;;
+            }
+
+            #forms {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                margin-left: 60px;
+            }
+
+            .form-name {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+
+            form {
+                margin-bottom: 40px;
+                width: 100%;
+                max-width: 500px;
+            }
+
+            .error-msg {
+                display: flex;
+                border-radius: 5px;
+                background-color: rgb(255, 87, 87);
+                color: white;
+                padding: 5px;
+                margin: 5px;
+            }
+
+            .result-msg {
+                display: flex;
+                border-radius: 5px;
+                background-color: rgb(99, 209, 56);
+                color: white;
+                padding: 5px;
+                margin: 5px;
+            }
+
+            .divider {
+                width: 100%;
+                margin-bottom: 20px;
+                border-bottom: 0.5px solid #bbb;
+            }
+
+            .small {
+                font-size: 90%;
+            }
+
+            .warning {
+                color:rgb(255, 87, 87);
+            }
+
+            #delete-warning {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+
+            #bottom-divider {
+                margin-top:40px;
+            }
+            
+        </style>
+</head>
+<body>
+
+<div id="main">
+
+    <div id="side-bar" th:object="${user}">
+
+        <div id="side-bar-main">
+            <div id="user" class="side-bar-section">
+                <img class="side-bar-icon" th:src="@{/img/user.png}">
+                <a id="user-name" class="link" th:text="*{name}" th:href="@{/me/user}">Username</a>
+            </div>
+    
+            <div class="short-divider"></div>
+    
+            <div id="search" class="side-bar-section-row">
+                <a class="link" th:href="@{/me/search}">Search</a>
+            </div>
+    
+            <div id="manage" class="side-bar-section-row">
+                <a class="link" th:href="@{/me/manage}">Manage</a>
+            </div>
+    
+            <div id="post" class="side-bar-section-row">
+                <a class="link" th:href="@{/me/post}">Post</a>
+            </div>
+    
+            <div id="generate" class="side-bar-section-row">
+                <a class="link" th:href="@{/me/generate}">Generate</a>
+            </div>
+        </div>
+
+        <div id="side-bar-sub">
+            <div id="home" class="side-bar-section-row">
+                <a class="link" th:href="@{/}">Home</a>
+            </div>
+    
+            <form id="logout" class="side-bar-section-row" method="post" th:action="@{/logout}">
+                <input class="link" id="log-out" type="submit" value="Log out"/>
+            </form>
+    
+            <div class="short-divider"></div>
+    
+            <div id="privacy" class="side-bar-section-row">
+                <a class="sub-link" th:href="@{/privacy}">Privacy Policies</a>
+            </div>
+    
+            <div id="contact" class="side-bar-section-row">
+                <a class="sub-link" href="mailto:wd4@wd4.ca">Contact Author</a>
+            </div>
+    
+            <div id="github" class="side-bar-section-row">
+                <a class="sub-link" href="https://github.com">Github</a>
+            </div>
+        </div>
+    </div>
+    <div id="container" th:object="${user}">
+        <div id="main-menu">
+            <span id="main-menu-title">Manage Your Account</span>
+
+            <div id="forms">
+                <span class="main-menu-text form-name">Change your name</span>
+                <div class="error-msg" th:if="${errorNameMsg}" th:text = "${errorNameMsg}">ERROR MSG</div>
+                <div class="result-msg" th:if="${resultNameMsg}" th:text = "${resultNameMsg}">RESULT MSG</div> 
+                <form method="POST" th:action="@{/me/changeName}">
+                    <div class="field">
+                        <label for="newName">New name</label>
+                        <input name="newName" id="newName" class="input"/>
+                    </div>
+                    
+                    <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+                    <div class="submit-field">
+                        <input type="submit" value="Go" class="submit"/>
+                    </div>
+                </form>
+    
+                <span class="main-menu-text form-name">Change your password</span>
+                <div class="error-msg" th:each="error: ${errorPwdMsg}">
+                    <div th:text="${error}">ERROR</div> 
+                </div>
+                <div class="result-msg" th:if="${resultPwdMsg}" th:text = "${resultPwdMsg}">RESULT MSG</div>
+                <form method="POST" th:action="@{/me/changePassword}">
+                    <div class="field">
+                        <label for="newPassword">New password</label>
+                        <input name="newPassword" id="newPassword" type="password" class="input"/>
+                    </div>
+                    <div class="field">
+                        <label for="confirm">Confirm</label>
+                        <input name="confirm" id="confirm" type="password" class="input"/>
+                    </div>   
+                    <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+                    <div class="submit-field">
+                        <input type="submit" value="Go" class="submit"/>
+                    </div>
+                </form>
+
+                <div class="divider" id="bottom-divider"></div>
+
+                <span class="main-menu-text form-name">Delete account</span>
+                <div class="small warning" id="delete-warning">You will lose all your data and you won't be able to log in with the currrent account.</div>
+                <div class="error-msg" th:if="${errorDeleteMsg}">
+                    <div th:text="${errorDeleteMsg}">DELETE ERROR</div> 
+                </div>
+                <form method="post" th:action="@{/me/delete}" id="delete">
+                    <div class="field">
+                        <label for="email">Confirm your email</label>
+                        <input name="email" id="email" type="email" class="input"/>
+                    </div>   
+                    <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+                    <div class="submit-field">
+                        <input type="submit" value="I know what I'm doing" class="submit"/>
+                    </div>
+                </form>
+            </div> 
+        </div>    
+    </div>
+
+</div>
+</body>
+</html>

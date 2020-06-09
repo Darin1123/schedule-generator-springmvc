@@ -1,0 +1,93 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>guide</title>
+    <style>
+            * {
+                transition: all 0.4s;
+            }
+
+            html, body {
+                height: 100%;
+                margin: 0; padding: 0;
+                background-color: #fefefe;
+                font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+                color: #666;
+                scroll-behavior: smooth;
+
+            }
+
+            body {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            #main {
+                margin-top: 80px;
+                margin-bottom: 80px;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                width: 80%;
+                max-width: 1080px;
+                /* border: rgb(255, 87, 87) 0.5px solid; */
+            }
+
+            .title {
+                font-size: 160%;
+                margin-bottom: 20px;
+            }
+
+            .section {
+                font-size: 120%;
+                margin-bottom: 10px;
+            }
+
+            .text {
+                margin-bottom: 20px;
+            }
+            
+            .blank {
+                margin-bottom: 40px;
+            }
+
+            .emph {
+                font-family: 'Courier New', Courier, monospace;
+            }
+
+            .img {
+                width: 80%;
+                max-width: 800px;
+            }
+        </style>
+</head>
+<body>
+
+<div id="main">
+    <span class="title">How to add/modify a course</span>
+    <span class="section">1. Write a Course Name</span>
+    <span class="text">The course names should follow a pattern. Start with faculty name and follow with course code.</span>
+    <span class="text">For example, "<span class="emph">ENG 1EE0</span>", "<span class="emph">COMPSCI 4ML3</span>" are eligible course names.</span>
+    <div class="blank"></div>
+    <span class="section">2. Write a Term Name</span>
+    <span class="text">A term name should start with a year and end with a term (one of "<span class="emph">spring</span>", "<span class="emph">summer</span>", "<span class="emph">fall</span>", "<span class="emph">winter</span>").</span>
+    <span class="text">For example, "<span class="emph">2020 winter</span>", "<span class="emph">2019 spring</span>" are eligible term names.</span>
+    <div class="blank"></div>
+    <span class="section">3. Write Course Sections</span>
+    <span>Let's learn from an example. </span>
+    <img class="img" th:src="@{img/course.png}">
+    <span class="text">The key information that should be included for a section is weekyday(s), start time, and end time.</span>
+    <span class="text">
+        In the example, the days are "<span class="emph">Tu</span>" and "<span class="emph">Th</span>", 
+        the start time is "<span class="emph">09:00</span>", 
+        and the end time is "<span class="emph">12:00</span>".
+    </span>
+    <span class="text">THEREFORE, for this section, the correct input should be "<span class="emph">TuTh 09:00-12:00</span>"</span>
+    <span class="text">In general, each section should be one line.</span>
+    <span class="text">If the section are given in different days with different time, then seperate them with a comma.</span>
+    <span class="text">For another example, if there is a section have classes on Mondays and Tuesdays starting at 9:30 and ending at 10:20, 
+        and another class on Friday starting at 12:30-13:20. Then the input should be "<span class="emph">MoTu 09:20-10:20, Fr 12:30-13:20</span>".</span>
+</div>
+</body>
+</html>

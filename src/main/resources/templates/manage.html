@@ -1,0 +1,399 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Manage</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        * {
+            transition: all 0.4s;
+        }
+
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background-color: #fefefe;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            color: #666;
+            scroll-behavior: smooth;
+        }
+
+        #main {
+            min-height: 100%;
+            width: 100%;
+        }
+
+        .container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+        }
+
+        .link {
+            color: #666;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .link:hover {
+            color: rgb(255, 87, 87);
+        }
+
+        .dark {
+            color: #aaa;
+        }
+
+        .dark:hover {
+            color: #aaa;
+        }
+
+        #side-bar {
+            position: fixed;
+            width: 280px;
+            height: calc(100%);
+            background-color: white;
+            border-right: 0.5px solid #ddd;
+            transform: translateX(-240px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        #side-bar:hover {
+            transform: translateX(0px);
+        }
+
+        #side-bar-main {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #side-bar-sub {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .side-bar-section {
+            width: calc(100% - 80px);
+            padding-left: 40px;
+            padding-right: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            /* background-color: red; */
+        }
+
+        .side-bar-section-row {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 40px;
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+
+        .side-bar-icon {
+            height: 25px;
+        }
+
+        #user {
+            margin-top: 40px;
+        }
+
+        #user-name {
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        .short-divider {
+            border-bottom: 0.5px #bbb solid;
+            width: 70%;
+            margin: 10px;
+        }
+
+        #container {
+            /* transform: translateY(-30px); */
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #main-menu {
+            margin: 50px;
+            /* border: red solid 0.5px; */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 80%;
+        }
+
+        #main-menu-title {
+            font-size: 150%;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #log-out {
+            border: none;
+            background-color: white;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            font-size: 100%;
+            outline: none;
+        }
+
+        .sub-link {
+            color: #bbb;
+            text-decoration: none;
+        }
+
+        .sub-link:hover {
+            color: rgb(255, 87, 87);
+        }
+
+        #courses {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            /* border: green solid 0.5px; */
+        }
+
+        .course {
+            min-width: 300px;
+            width: 80%;
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+            margin: 10px;
+            /* border:#eee 0.5px solid; */
+            background-color: #f6f6f6;
+            padding: 10px;
+            border-radius: 5px;
+
+        }
+
+        .text {
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .course:hover {
+            background-color: #eee;
+        }
+
+        .course:hover .course-name {
+            color: rgb(255, 87, 87);
+        }
+
+        .course-name {
+            border: none;
+            color: #666;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            background-color: inherit;
+            cursor: pointer;
+            font-size: 100%;
+            outline: none;
+        }
+
+        .basic-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .small-text {
+            font-size: 90%;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .small {
+            font-size: 90%;
+        }
+
+        #search-keyword {
+            font-family: 'Courier New', Courier, monospace;
+            border: none;
+            outline: none;
+            border-bottom: 0.5px #666 solid;
+        }
+
+        #search-keyword:focus {
+            border-bottom: 0.5px rgb(255, 87, 87) solid;
+        }
+
+        .submit {
+            background-color: inherit;
+            border: none;
+            cursor: pointer;
+            font-size: 120%;
+            outline: none;
+            color: #666;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            /* background-color: rgb(255, 87, 87); */
+        }
+
+        .submit:hover {
+            color: rgb(255, 87, 87);
+        }
+
+        .options {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            /* border:rgb(255, 87, 87) 0.5px solid; */
+        }
+
+        form {
+            margin: 0;
+        }
+
+        button:disabled:hover {
+            color: #999;
+        }
+
+        button:disabled {
+            color: #999;
+        }
+
+        .theme {
+            color: rgb(255, 87, 87);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="main">
+
+        <div id="side-bar" th:object="${user}">
+
+            <div id="side-bar-main">
+                <div id="user" class="side-bar-section">
+                    <img class="side-bar-icon" th:src="@{/img/user.png}">
+                    <a id="user-name" class="link" th:text="*{name}" th:href="@{/me/user}">Username</a>
+                </div>
+
+                <div class="short-divider"></div>
+
+                <div id="search" class="side-bar-section-row">
+                    <a class="link" th:href="@{/me/search}">Search</a>
+                </div>
+
+                <div id="manage" class="side-bar-section-row">
+                    <a class="link" th:href="@{/me/manage}">Manage</a>
+                </div>
+
+                <div id="post" class="side-bar-section-row">
+                    <a class="link" th:href="@{/me/post}">Post</a>
+                </div>
+
+                <div id="generate" class="side-bar-section-row">
+                    <a class="link" th:href="@{/me/generate}">Generate</a>
+                </div>
+            </div>
+
+            <div id="side-bar-sub">
+                <div id="home" class="side-bar-section-row">
+                    <a class="link" th:href="@{/}">Home</a>
+                </div>
+
+                <form id="logout" class="side-bar-section-row" method="post" th:action="@{/logout}">
+                    <input class="link" id="log-out" type="submit" value="Log out" />
+                </form>
+
+                <div class="short-divider"></div>
+
+                <div id="privacy" class="side-bar-section-row">
+                    <a class="sub-link" th:href="@{/privacy}">Privacy Policies</a>
+                </div>
+
+                <div id="contact" class="side-bar-section-row">
+                    <a class="sub-link" href="mailto:wd4@wd4.ca">Contact Author</a>
+                </div>
+
+                <div id="github" class="side-bar-section-row">
+                    <a class="sub-link" href="https://github.com">Github</a>
+                </div>
+            </div>
+        </div>
+        <div id="container" th:object="${user}">
+            <div id="main-menu">
+                <span id="main-menu-title">Manage</span>
+                <span id="add-course" th:if="${courses.size() eq 0 }">
+                    No course? 
+                    <a class="link theme" th:href="@{/me/post}">Post one</a>
+                     or 
+                    <a class="link theme" th:href="@{/me/search}">Search courses</a>
+                    .
+                </span>
+                <form id="search" th:if="${courses.size()>0}">
+                    <input name="keyword" id="search-keyword" placeholder="Enter keyword" th:value="${keyword}">
+                    <input type="submit" value="filter" class="submit">
+                </form>
+                <div id="courses">
+                    <div th:id="'course'+${course.id}" class="course" th:each="course: ${courses}">
+                        <div class="basic-info">
+                            <span th:text="${course.name}">COURSE</span>
+                            <span th:text="${course.term}" class="text">TERM</span>
+                            <span th:text="'@'+${course.authorName}" class="text author-name">@AUTHOR</span>
+                            <span th:text="${course.star}">STAR</span>
+                        </div>
+                        <div class="sections" th:each="lec, iter: ${course.lecs}">
+                            <div class="section-title" th:text="'Lec '+${iter.index+1}">LEC #</div>
+                            <div class="small-text" th:text="${lec}">LEC INFO</div>
+                        </div>
+                        <div class="sections" th:each="tut, iter: ${course.tuts}">
+                            <div class="section-title" th:text="'Tut '+${iter.index+1}">TUT #</div>
+                            <div class="small-text" th:text="${tut}">TUT INFO</div>
+                        </div>
+                        <div class="sections" th:each="lab, iter: ${course.labs}">
+                            <div class="section-title" th:text="'Lab '+${iter.index+1}">LAB #</div>
+                            <div class="small-text" th:text="${lab}">LAB INFO</div>
+                        </div>
+
+                        <div class="options">
+                            <form th:action="@{/me/modify}">
+                                <input type="hidden" name="cid" th:value="${course.id}">
+                                <input type="submit" value="modify" class="submit">
+                            </form>
+                            <button type="button" th:id="'course-delete'+${course.id}" class="submit"
+                                onclick="deleteCourse(this)">delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function getId(name) {
+            return name.replace("course-delete", "");
+        }
+        function deleteCourse(button) {
+            $(document).ready(
+                function () {
+                    let id = getId(button.id);
+                    $.ajax({
+                        url: document.location.origin + "/me/delete?cid=" + id
+                    }).then(function(data) {
+                        $("#course"+id).fadeOut();
+                    });
+                });
+        }
+    </script>
+</body>
+
+</html>

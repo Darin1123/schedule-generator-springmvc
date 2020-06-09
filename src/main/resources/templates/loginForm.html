@@ -1,0 +1,149 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>login</title>
+    <style>
+            * {
+                transition: all 0.4s;
+            }
+
+            html, body {
+                height: 100%;
+                margin: 0; padding: 0;
+                background-color: #fefefe;
+                font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+                color: #666;
+                scroll-behavior: smooth;
+                font-size: 110%;
+            }
+
+            #login-form {
+                margin-top: 100px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            #title {
+                font-size: 200%;
+            }
+
+            #register-link {
+                margin: 5px;
+                font-size: 90%;
+                margin: 10px;
+            }
+
+            .link {
+                color: #666;
+                cursor: pointer;
+            }
+
+            .link:hover {
+                color:rgb(255, 87, 87);
+            }
+
+            .error-msg {
+                display: flex;
+                border-radius: 5px;
+                background-color: rgb(255, 87, 87);
+                color: white;
+                padding: 5px;
+                margin: 5px;
+            }
+
+            label {
+                display: inline-block;
+                width: 100px;
+                text-align: right;
+                /* background-color: thistle; */
+            }
+
+            .field {
+                margin: 10px;
+                /* background-color: salmon; */
+                display: flex;
+                justify-content: space-evenly;
+            }
+
+            form {
+                width: 400px;
+                font-display: flex;
+                flex-direction: column;
+                align-items: center;
+                /* background-color: rosybrown; */
+            }
+
+            #submit {
+                background-color: white;
+                border: none;
+                background-color: none;
+                cursor: pointer;
+                font-size: 95%;
+                outline: none;
+                font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+                /* background-color: rgb(255, 87, 87); */
+            }
+
+            .input {
+                font-size: large;
+                color: #666;
+                width: 240px;
+                border: none;
+                outline: none;
+                font-family: 'Courier New', Courier, monospace;
+                border-bottom: #666 2px solid;
+                /* background-color: springgreen; */
+            }
+
+            input:focus {
+                border-bottom: rgb(255, 87, 87) 2px solid;
+            }
+
+            #back-home {
+                position: absolute;
+                top: 20px;
+                left:20px;
+                text-decoration: none;
+            }
+
+            #sign-up {
+                color: rgb(255, 87, 87);
+            }
+
+            a {
+                text-decoration: none;
+            }
+        </style>
+</head>
+<body>
+    <div id="back-home"><a class="link" th:href="@{/}">Home</a></div>
+    <div id="login-form">
+        <span id="title">Log In</span>
+        <span id="register-link">Don't have an account? <a class="link" id="sign-up" th:href="@{/register}">Sign up</a>!</span>
+        <div th:if="${errors}" class="error-msg">
+            Unable to login. Check your email and password.
+        </div>
+        <form method="POST">
+
+            <div class="field">
+                <label for="email">Email</label>
+                <input class="input" type="email" name="email">
+            </div>
+
+            <div class="field">
+                <label for="password">Password</label>
+                <input class="input" type="password" name="password">
+            </div>
+            
+            <div>
+                <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+            </div>
+
+            <div class="field">
+                <input type="submit" value="Go!" id="submit" class="link"/>
+            </div>
+        </form>
+    </div>    
+</body>
+</html>

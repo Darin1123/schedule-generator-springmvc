@@ -1,0 +1,39 @@
+.table {
+    display: grid;
+    grid-template-columns: repeat(5, 20%);
+    background-color: inherit;
+    /*grid-auto-rows: 50px;*/
+    grid-row-gap: 10px;
+     background-color: #f8f8f8;
+}
+
+.grid-class {
+    transition: all 0.4s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #eee;
+    padding: 20px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color: #666;
+}
+
+.grid-class:hover {
+    background-color: #ddd;
+}
+
+.schedule {
+    margin-bottom: 80px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color: #666;
+}
+
+#schedules {
+    margin-top: 80px;
+    /*border: rgb(255, 87, 87) 0.5px solid;*/
+    width: 100%;
+}
+
+.info {
+    margin-right: 20px;
+}

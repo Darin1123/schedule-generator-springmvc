@@ -1,0 +1,249 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>home</title>
+    <style>
+            * {
+                transition: all 0.4s;
+            }
+
+            html, body {
+                height: 100%;
+                margin: 0; padding: 0;
+                background-color: #fefefe;
+                font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+                color: #666;
+                scroll-behavior: smooth;
+            }
+
+            #main {
+                min-height: 100%;
+                width: 100%;
+                margin-bottom: -60px;
+            }
+
+            #foot {
+                height: 60px;
+                width: 100%;
+                background-color: #666;
+                color: #bbb;
+            }
+
+            #nav {
+                z-index: 0;
+                height: 60px;
+                width: 100%;
+                position: fixed;
+                /* background-color: red; */
+                display: flex;
+                background-color: #fff;
+                border-bottom: 0.5px solid #bbb;
+            }
+
+            #nav-container {
+                justify-content: space-between;
+            }
+
+            #nav-title {
+                margin-left: 20px;
+                color: #666;
+                text-decoration: none;
+            }
+
+            #nav-options {
+                margin-right: 20px;
+            }
+
+            .nav-option {
+                margin: 10px;
+                text-decoration: none;
+                cursor: pointer;
+                color: #666;
+            }
+
+            .nav-option:hover {
+                color: rgb(255, 87, 87);
+            }
+
+            .container {
+                width: 100%;
+                height: 100%;
+                max-width: 1080px;
+                margin: 0 auto;
+                display: flex;
+                align-items: center;
+            }
+
+            .space-evenly {
+                justify-content: space-evenly;
+            }
+
+            .center {
+                justify-content: space-evenly;
+
+            }
+
+            .section {
+                min-height: 600px;
+                width: 100%;
+                /* background-color: red; */
+                border-bottom:  0.5px solid #bbb;
+            }
+
+            .title-page {
+                position: absolute;
+                top: 0;
+                left: 0;
+                z-index: 1;
+                background-color: #f9f9f9;
+                border-bottom: 0.5px solid #bbb;
+            }
+
+            .section-full {
+                height: 100%;
+                width: 100%;
+                /* background-color: red; */
+            }
+
+            .title {
+                font-size: 150%;
+            }
+
+            #title {
+                font-size: 200%;
+                text-align: center;
+            }
+
+            .divider {
+                width: 100%;
+                height: 0.5px;
+                background-color: #bbb;
+            }
+
+            .link {
+                color: #666;
+                text-decoration: none;
+            }
+
+            .link:hover {
+                color: rgb(255, 87, 87);
+            }
+
+            .dark {
+                color: #aaa;
+            }
+
+            .dark:hover {
+                color: rgb(255, 87, 87);
+            }
+
+            #fill-the-void {
+                width: 100%;
+                height: 100%;
+            }
+
+            #fill-the-void-100 {
+                width: 100%;
+                height: 100px;
+            }
+
+            #fill-the-void-60 {
+                width: 100%;
+                height: 60px;
+            }
+
+            .container-column {
+                width: 100%;
+                /* height: 100%; */
+                max-width: 1080px;
+                margin: 0 auto;
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+            }
+
+            .section-title {
+                font-size: 200%;
+                margin-top: 80px;;
+                margin-bottom: 40px;
+            }
+
+            .section-text {
+                font-family: 'Courier New', Courier, monospace;
+                width: 80%;
+                font-size: 120%;
+                margin-top: 40px;
+                text-align: center;
+                margin-bottom: 40px;
+            }
+
+            .space-between {
+                justify-content: space-evenly;
+            }
+
+            .icon-img {
+                height: 70px;
+                margin: 20px;
+            }
+        </style>
+</head>
+<body>
+
+<div id="main">
+    <div class="section-full title-page" id="home">
+        <div class="container center">
+            <span id="title">Welcome to Schedule Generator</span>
+        </div>
+    </div>
+
+    <div id="nav">
+        <div class="container" id="nav-container">
+            <a class="title" id="nav-title" href="#">SG</a>
+            <div id="nav-options">
+                <a class="nav-option" href="#home">Home</a>
+                <a class="nav-option" href="#what">What</a>
+                <a class="nav-option" href="#how">How</a>
+                <a class="nav-option" href="#go">Go</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="fill-the-void"></div>
+    <div id="fill-the-void-60"></div>
+
+    <div class="section" id="what">
+        <div class="container-column">
+            <div class="section-title">What is it?</div>
+            <img class="icon-img" th:src="@{img/schedule.png}"/>
+            <div class="section-text">Schedule Generator, as its name implies, helps users generate schedules with users' courses. Users can post courses so that other users may reuse them instead of rewrite new ones.</div>
+        </div>
+    </div>
+
+    <div class="section" id="how">
+        <div class="container-column">
+            <div class="section-title">How does it work?</div>
+            <img class="icon-img" th:src="@{img/user.png}"/>
+            <div class="section-text">First, register an account. Then log in to post your course or search courses posted by other people. You can modify, delete, update your courses, and more importantly, you can generate your own schedules!!! If you post a new course, then you will be the author of this course. If someone else selects the course you post, then this course will get a star, and will be more likely to seen by the others.</div>
+        </div>
+    </div>
+
+    <div class="section" id="go">
+        <div class="container-column">
+            <div class="section-title">Check it out!</div>
+            <img class="icon-img" th:src="@{img/key.png}"/>
+            <a class="section-text link" href="/login">Try it now!</a>
+        </div>
+    </div>
+
+
+</div>
+
+<div id="foot">
+    <div class="container space-between">
+        <a class="link dark" href="/privacy">Privacy Policies</a>
+        <a class="link dark" href="mailto:darin1123@outlook.com">Contact Author</a>
+        <a class="link dark" href="https://github.com">Github</a>
+    </div>
+</div>
+</body>
+</html>

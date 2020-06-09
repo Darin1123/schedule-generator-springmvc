@@ -1,0 +1,359 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, shrink-to-fit=no">
+    <title>Post</title>
+    <style>
+        * {
+            transition: all 0.4s;
+        }
+
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background-color: #fefefe;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            color: #666;
+            scroll-behavior: smooth;
+        }
+
+        #main {
+            min-height: 100%;
+            width: 100%;
+        }
+
+        .container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+        }
+
+        .link {
+            color: #666;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .link:hover {
+            color: rgb(255, 87, 87);
+        }
+
+        .dark {
+            color: #aaa;
+        }
+
+        .dark:hover {
+            color: #aaa;
+        }
+
+        #side-bar {
+            position: fixed;
+            width: 280px;
+            height: calc(100%);
+            background-color: white;
+            border-right: 0.5px solid #ddd;
+            transform: translateX(-240px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        #side-bar:hover {
+            transform: translateX(0px);
+        }
+
+        #side-bar-main {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #side-bar-sub {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .side-bar-section {
+            width: calc(100%-80px);
+            padding-left: 40px;
+            padding-right: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            /* background-color: red; */
+        }
+
+        .side-bar-section-row {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 40px;
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+
+        .side-bar-icon {
+            height: 25px;
+        }
+
+        #user {
+            margin-top: 40px;
+        }
+
+        #user-name {
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        .short-divider {
+            border-bottom: 0.5px #bbb solid;
+            width: 70%;
+            margin: 10px;
+        }
+
+        #container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #main-menu {
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 500px;
+            margin-left: 60px;
+            margin-right: 20px;
+
+            /* border:rgb(255, 87, 87) solid 0.5px; */
+            /* background-color: rgb(255, 87, 87); */
+        }
+
+
+
+        #main-menu-title {
+            font-size: 150%;
+            margin-bottom: 10px;
+        }
+
+        #log-out {
+            border: none;
+            background-color: white;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            font-size: 100%;
+            outline: none;
+        }
+
+        .sub-link {
+            color: #bbb;
+            text-decoration: none;
+        }
+
+        .sub-link:hover {
+            color: rgb(255, 87, 87);
+        }
+
+        form {
+            margin-top: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .input {
+            font-size: large;
+            color: #666;
+            width: 240px;
+            border: none;
+            outline: none;
+            border-bottom: #666 2px solid;
+            margin-right: 40px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        input:focus {
+            border-bottom: rgb(255, 87, 87) 2px solid;
+        }
+
+        .field {
+            margin: 10px;
+            /* background-color: salmon; */
+            display: flex;
+            /* border: orangered 0.5px solid; */
+
+            justify-content: space-evenly;
+        }
+
+        label {
+            display: inline-block;
+            width: 80px;
+            text-align: right;
+            margin-right: 10px;
+            /* background-color: thistle; */
+        }
+
+        textarea {
+            margin: 0;
+            transition: none;
+            border: #bbb 0.5px solid;
+            outline: none;
+            border-radius: 5px;
+            width: 240px;
+            margin-right: 40px;
+            resize: vertical;
+            min-height: 40px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        #submit {
+                background-color: white;
+                border: none;
+                background-color: none;
+                cursor: pointer;
+                font-size: 100%;
+                outline: none;
+                font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+                /* background-color: rgb(255, 87, 87); */
+                color: #666;
+            }
+
+        #submit:hover {
+            color: rgb(255, 87, 87);
+        }
+
+        .error-msg {
+                display: flex;
+                border-radius: 5px;
+                background-color: rgb(255, 87, 87);
+                color: white;
+                padding: 5px;
+                margin: 5px;
+            }
+
+            .result-msg {
+                display: flex;
+                border-radius: 5px;
+                background-color: rgb(99, 209, 56);
+                color: white;
+                padding: 5px;
+                margin: 5px;
+            }
+
+            #tip {
+                margin-right: 20px;
+                font-family: 'Courier New', Courier, monospace;
+            }
+    </style>
+</head>
+
+<body>
+
+    <div id="main">
+
+        <div id="side-bar" th:object="${user}">
+
+            <div id="side-bar-main">
+                <div id="user" class="side-bar-section">
+                    <img class="side-bar-icon" th:src="@{/img/user.png}">
+                    <a id="user-name" class="link" th:text="*{name}" th:href="@{/me/user}">Username</a>
+                </div>
+
+                <div class="short-divider"></div>
+
+                <div id="search" class="side-bar-section-row">
+                    <a class="link" th:href="@{/me/search}">Search</a>
+                </div>
+
+                <div id="manage" class="side-bar-section-row">
+                    <a class="link" th:href="@{/me/manage}">Manage</a>
+                </div>
+
+                <div id="post" class="side-bar-section-row">
+                    <a class="link" th:href="@{/me/post}">Post</a>
+                </div>
+
+                <div id="generate" class="side-bar-section-row">
+                    <a class="link" th:href="@{/me/generate}">Generate</a>
+                </div>
+            </div>
+
+            <div id="side-bar-sub">
+                <div id="home" class="side-bar-section-row">
+                    <a class="link" th:href="@{/}">Home</a>
+                </div>
+
+                <form id="logout" class="side-bar-section-row" method="post" th:action="@{/logout}">
+                    <input class="link" id="log-out" type="submit" value="Log out" />
+                </form>
+
+                <div class="short-divider"></div>
+
+                <div id="privacy" class="side-bar-section-row">
+                    <a class="sub-link" th:href="@{/privacy}">Privacy Policies</a>
+                </div>
+
+                <div id="contact" class="side-bar-section-row">
+                    <a class="sub-link" href="mailto:wd4@wd4.ca">Contact Author</a>
+                </div>
+
+                <div id="github" class="side-bar-section-row">
+                    <a class="sub-link" href="https://github.com">Github</a>
+                </div>
+            </div>
+        </div>
+        <div id="container">
+            <div id="main-menu">
+                <span id="main-menu-title">Post Your Course</span>
+                <div class="error-msg" th:each="error: ${errorMsgs}">
+                    <div th:text="${error}">ERROR MSG</div>
+                </div>
+                <div class="result-msg" th:if="${resultMsg}" th:text = "${resultMsg}">RESULT MSG</div> 
+                
+                <form method="post" th:action="@{/me/post}">
+                    <div class="field">
+                        <label for="name">Name</label>
+                        <input class="input" name="name" id="name" th:value="${name}" placeholder="e.g. ENG 1D03">
+                    </div>
+                    <div class="field">
+                        <label for="term">Term</label>
+                        <input class="input" name="term" id="term" th:value="${term}" placeholder="e.g. 2020 winter">
+                    </div>
+                    <div class="field">
+                        <label for="lecs">Lecture Sections</label>
+                        <textarea id="lecs" name="lecs" th:text="${lecs}"></textarea>
+                    </div>
+                    <div class="field">
+                        <label for="tuts">Tutorial Sections</label>
+                        <textarea id="tuts" name="tuts" th:text="${tuts}"></textarea>
+                    </div>
+                    <div class="field">
+                        <label for="labs">Lab Sections</label>
+                        <textarea id="labs" name="labs" th:text="${labs}"></textarea>
+                    </div>
+                    <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+                    <div class="field">
+                        <a id="tip" class="link" th:href="@{/guide}">Need Help?</a>
+                        <input id="submit" type="submit" value="Post">
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>

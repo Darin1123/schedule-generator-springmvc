@@ -1,0 +1,222 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Me</title>
+    <style>
+            * {
+                transition: all 0.4s;
+            }
+
+            html, body {
+                height: 100%;
+                margin: 0; padding: 0;
+                background-color: #fefefe;
+                font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+                color: #666;
+                scroll-behavior: smooth;
+            }
+
+            #main {
+                min-height: 100%;
+                width: 100%;
+            }
+
+            .container {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: space-evenly;
+            }
+
+            .link {
+                color: #666;
+                text-decoration: none;
+                cursor: pointer;
+            }
+
+            .link:hover {
+                color: rgb(255, 87, 87);
+            }
+
+            .dark {
+                color: #aaa;
+            }
+
+            .dark:hover {
+                color: #aaa;
+            }
+
+            #side-bar {
+                position: fixed;
+                width: 280px;
+                height: calc(100%);
+                background-color: white;
+                border-right: 0.5px solid #ddd;
+                transform: translateX(-240px);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+            #side-bar:hover {
+                transform: translateX(0px);
+            }
+
+            #side-bar-main {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            #side-bar-sub {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                margin-bottom: 20px;
+            }
+
+            .side-bar-section {
+                width: calc(100%-80px);
+                padding-left: 40px;
+                padding-right: 40px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                /* background-color: red; */
+            }
+
+            .side-bar-section-row {
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 40px;
+                margin-top: 5px;
+                margin-bottom: 5px;
+            }
+
+            .side-bar-icon {
+                height: 25px;
+            }
+
+            #user {
+                margin-top: 40px;
+            }
+
+            #user-name {
+                margin-top: 10px;
+                margin-bottom: 10px;
+            }
+
+            .short-divider {
+                border-bottom: 0.5px #bbb solid;
+                width: 70%;
+                margin: 10px;
+            }
+
+            #container {
+                /* transform: translateY(-30px); */
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+            }
+
+            #main-menu {
+                margin: 50px;
+            }
+
+            #main-menu-title {
+                font-size: 150%;
+                text-align: center;
+            }
+
+            #log-out {
+                border: none;
+                background-color: white;
+                font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+                font-size: 100%;
+                outline: none;
+            }
+
+            .sub-link {
+                color: #bbb;
+                text-decoration: none;
+            }
+
+            .sub-link:hover {
+                color:rgb(255, 87, 87);
+            }
+            
+        </style>
+</head>
+<body>
+
+<div id="main">
+
+    <div id="side-bar" th:object="${user}">
+
+        <div id="side-bar-main">
+            <div id="user" class="side-bar-section">
+                <img class="side-bar-icon" th:src="@{/img/user.png}">
+                <a id="user-name" class="link" th:text="*{name}" th:href="@{/me/user}">Username</a>
+            </div>
+    
+            <div class="short-divider"></div>
+    
+            <div id="search" class="side-bar-section-row">
+                <a class="link" th:href="@{/me/search}">Search</a>
+            </div>
+    
+            <div id="manage" class="side-bar-section-row">
+                <a class="link" th:href="@{/me/manage}">Manage</a>
+            </div>
+    
+            <div id="post" class="side-bar-section-row">
+                <a class="link" th:href="@{/me/post}">Post</a>
+            </div>
+    
+            <div id="generate" class="side-bar-section-row">
+                <a class="link" th:href="@{/me/generate}">Generate</a>
+            </div>
+        </div>
+
+        <div id="side-bar-sub">
+            <div id="home" class="side-bar-section-row">
+                <a class="link" th:href="@{/}">Home</a>
+            </div>
+    
+            <form id="logout" class="side-bar-section-row" method="post" th:action="@{/logout}">
+                <input class="link" id="log-out" type="submit" value="Log out"/>
+            </form>
+    
+            <div class="short-divider"></div>
+    
+            <div id="privacy" class="side-bar-section-row">
+                <a class="sub-link" th:href="@{/privacy}">Privacy Policies</a>
+            </div>
+    
+            <div id="contact" class="side-bar-section-row">
+                <a class="sub-link" href="mailto:wd4@wd4.ca">Contact Author</a>
+            </div>
+    
+            <div id="github" class="side-bar-section-row">
+                <a class="sub-link" href="https://github.com">Github</a>
+            </div>
+        </div>
+    </div>
+    <div id="container" th:object="${user}">
+        <div id="main-menu">
+            <span id="main-menu-title" th:text="'Hello, '+*{name}+'! Move cursor to left to get started.'">HELLO MESSAGE</span>
+        </div>    
+    </div>
+
+</div>
+</body>
+</html>

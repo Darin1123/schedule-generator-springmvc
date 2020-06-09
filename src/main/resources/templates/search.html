@@ -1,0 +1,492 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, shrink-to-fit=no">
+    <title>Search</title>
+    <style>
+        * {
+            transition: all 0.4s;
+        }
+
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background-color: #fefefe;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            color: #666;
+            scroll-behavior: smooth;
+        }
+
+        #main {
+            min-height: 100%;
+            width: 100%;
+        }
+
+        .container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+        }
+
+        .link {
+            color: #666;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .link:hover {
+            color: rgb(255, 87, 87);
+        }
+
+        .dark {
+            color: #aaa;
+        }
+
+        .dark:hover {
+            color: #aaa;
+        }
+
+        #side-bar {
+            position: fixed;
+            width: 280px;
+            height: calc(100%);
+            background-color: white;
+            border-right: 0.5px solid #ddd;
+            transform: translateX(-240px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        #side-bar:hover {
+            transform: translateX(0px);
+        }
+
+        #side-bar-main {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #side-bar-sub {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .side-bar-section {
+            width: calc(100%-80px);
+            padding-left: 40px;
+            padding-right: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            /* background-color: red; */
+        }
+
+        .side-bar-section-row {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 40px;
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+
+        .side-bar-icon {
+            height: 25px;
+        }
+
+        #user {
+            margin-top: 40px;
+        }
+
+        #user-name {
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        .short-divider {
+            border-bottom: 0.5px #bbb solid;
+            width: 70%;
+            margin: 10px;
+        }
+
+        #container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #main-menu {
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 500px;
+            width: 70%;
+            /* max-width: 900px; */
+            margin-bottom: 80px;
+            margin-left: 60px;
+            margin-right: 20px;
+
+            /* border:rgb(255, 87, 87) solid 0.5px; */
+            /* background-color: rgb(255, 87, 87); */
+        }
+
+        .input {
+            font-size: large;
+            color: #666;
+            width: 240px;
+            border: none;
+            outline: none;
+            background-color: white;
+            font-family: 'Courier New', Courier, monospace;
+            border-bottom: #666 2px solid;
+            /* margin-left: 10px; */
+        }
+
+        .input:focus {
+            border-bottom: rgb(255, 87, 87) 2px solid;
+        }
+
+
+        .main-menu-title {
+            font-size: 180%;
+            margin-bottom: 20px;
+            margin-top: 40px;
+        }
+
+        #log-out {
+            border: none;
+            background-color: white;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            font-size: 100%;
+            outline: none;
+        }
+
+        .sub-link {
+            color: #bbb;
+            text-decoration: none;
+        }
+
+        .sub-link:hover {
+            color: rgb(255, 87, 87);
+        }
+
+        .submit {
+            background-color: inherit;
+            border: none;
+            cursor: pointer;
+            font-size: 120%;
+            outline: none;
+            color: #666;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            /* background-color: rgb(255, 87, 87); */
+        }
+
+        .submit:hover {
+            color: rgb(255, 87, 87);
+        }
+
+        .field {
+            margin-bottom: 10px;
+            /* background-color: salmon; */
+            display: flex;
+            justify-content: space-evenly;
+        }
+
+        #options {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+            /* border: rgb(255÷, 87, 87) solid 0.5px; */
+        }
+
+        .option {
+            width: 70%;
+            display: flex;
+            justify-content: space-between;
+            /* border: rgb(255, 87, 87) solid 0.5px; */
+        }
+
+        .small-text {
+            font-size: 90%;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .option-detail {
+            /* margin-right: 20px; */
+            display: flex;
+            align-items: center;
+        }
+
+        #search-section {
+            margin-bottom: 20px;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            /* border:rgb(255, 87, 87) 0.5px solid; */
+            /* background-color: rgb(255, 87, 87); */
+        }
+
+        #search-result {
+            display: flex;
+            flex-direction: row;
+            flex-flow: row wrap;
+            justify-content: center;
+            /* justify-content: space-evenly; */
+            width: 100%;
+            /* border:rgb(255, 87, 87) 0.5px solid; */
+        }
+
+        .course {
+            min-width: 300px;
+            width: 80%;
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+            margin: 10px;
+            justify-content: space-between;
+            /* border:#eee 0.5px solid; */
+            background-color: #f6f6f6;
+            padding: 10px;
+            border-radius: 5px;
+
+        }
+
+        .course:hover {
+            background-color: #eee;
+        }
+
+        .course:hover .course-name {
+            color: rgb(255, 87, 87);
+        }
+
+        .course-name {
+            border: none;
+            color: #666;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            background-color: inherit;
+            cursor: pointer;
+            font-size: 100%;
+            outline: none;
+        }
+
+        .basic-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .sections {
+            margin: 5px;
+        }
+
+        /* #search-form {
+            height: 300px;
+            border: rgb(255, 87, 87), solid, 0.5px;
+            border-radius: 20px;
+        } */
+
+        .blank-80 {
+            height: 80px;
+            width: 100%;
+        }
+
+        .radio {
+            margin-left: 10px;
+        }
+
+        .text {
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        form {
+            margin: 0;
+            padding: 0;
+        }
+
+        .section-title {
+            margin-bottom: 5px;
+        }
+
+        .pointer {
+            cursor: pointer;
+        }
+
+        .flex-row-end {
+            /* border:rgb(255, 87, 87) 1px solid; */
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+        }
+
+        button:disabled:hover {
+            color: #999;
+        }
+
+        button:disabled {
+            color: #999;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body>
+
+    <div id="main">
+
+        <div id="side-bar" th:object="${user}">
+
+            <div id="side-bar-main">
+                <div id="user" class="side-bar-section">
+                    <img class="side-bar-icon" th:src="@{/img/user.png}">
+                    <a id="user-name" class="link" th:text="*{name}" th:href="@{/me/user}">Username</a>
+                </div>
+
+                <div class="short-divider"></div>
+
+                <div id="search" class="side-bar-section-row">
+                    <a class="link" th:href="@{/me/search}">Search</a>
+                </div>
+
+                <div id="manage" class="side-bar-section-row">
+                    <a class="link" th:href="@{/me/manage}">Manage</a>
+                </div>
+
+                <div id="post" class="side-bar-section-row">
+                    <a class="link" th:href="@{/me/post}">Post</a>
+                </div>
+
+                <div id="generate" class="side-bar-section-row">
+                    <a class="link" th:href="@{/me/generate}">Generate</a>
+                </div>
+            </div>
+
+            <div id="side-bar-sub">
+                <div id="home" class="side-bar-section-row">
+                    <a class="link" th:href="@{/}">Home</a>
+                </div>
+
+                <form id="logout" class="side-bar-section-row" method="post" th:action="@{/logout}">
+                    <input class="link" id="log-out" type="submit" value="Log out" />
+                </form>
+
+                <div class="short-divider"></div>
+
+                <div id="privacy" class="side-bar-section-row">
+                    <a class="sub-link" th:href="@{/privacy}">Privacy Policies</a>
+                </div>
+
+                <div id="contact" class="side-bar-section-row">
+                    <a class="sub-link" href="mailto:wd4@wd4.ca">Contact Author</a>
+                </div>
+
+                <div id="github" class="side-bar-section-row">
+                    <a class="sub-link" href="https://github.com">Github</a>
+                </div>
+            </div>
+        </div>
+        <div id="container">
+            <div id="main-menu">
+                <div class="main-menu-title">Search Courses</div>
+                <form id="search-form" method="get" th:action="@{/me/search}">
+                    <div class="field" id="search-section">
+                        <input class="input" name="keyWord" th:value="${keyWord}">
+                        <input class="submit" type="submit" value="search">
+                    </div>
+                    <div id="options">
+                        <div class="option">
+                            <span>Sort by</span>
+                            <span class="option-detail">
+                                <label class="small-text pointer" for="radio-name">Star</label>
+                                <input class="radio pointer" id="radio-name" type="radio" name="sort" value="star"
+                                    th:checked="${sortOption eq 'star'}" />
+                            </span>
+
+                            <span class="option-detail">
+                                <label class="small-text pointer" for="radio-term">Term</label>
+                                <input class="radio pointer" id="radio-term" type="radio" name="sort" value="term"
+                                    th:checked="${sortOption eq 'term'}" />
+                            </span>
+                        </div>
+                        <!-- <div class="option">
+                            <span>Rank by</span>
+                            <div class="field">
+                                <span class="option-detail">
+                                    <label class="small-text" for="radio-star">Star</label>
+                                    <input id="radio-star" type="radio" name="rank" value="star" />
+                                </span>
+                            </div>
+                        </div> -->
+                    </div>
+                </form>
+
+                <div id="search-result">
+                    <div class="course" th:each="course: ${courses}">
+                        <div class="basic-info">
+                            <span th:text="${course.name}">COURSE NAME</span>
+                            <span th:text="${course.term}" class="text">TERM</span>
+                            <span th:text="'@'+${course.authorName}" class="text author-name">@AUTHOR</span>
+                            <span th:text="${course.star}">STAR</span>
+                        </div>
+                        <div class="sections" th:each="lec, iter: ${course.lecs}">
+                            <div class="section-title" th:text="'Lec '+${iter.index+1}">LEC #</div>
+                            <div class="small-text" th:text="${lec}">LEC INFO</div>
+                        </div>
+                        <div class="sections" th:each="tut, iter: ${course.tuts}">
+                            <div class="section-title" th:text="'Tut '+${iter.index+1}">TUT #</div>
+                            <div class="small-text" th:text="${tut}">TUT INFO</div>
+                        </div>
+                        <div class="sections" th:each="lab, iter: ${course.labs}">
+                            <div class="section-title" th:text="'Lab '+${iter.index+1}">LAB #</div>
+                            <div class="small-text" th:text="${lab}">LAB INFO</div>
+                        </div>
+                        <div class="flex-row-end">
+                            <button th:id="'course'+${course.id}" onclick="addCourse(this)" type="button" class="submit">Add</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="blank-80"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function getId(name) {
+            return name.replace("course", "");
+        }
+
+        function addCourse(btn) {
+            document.getElementById(btn.id).disabled = true;
+            $(document).ready(
+                function() {
+                    $.ajax({
+                        url: window.location.origin +"/me/add?cid="+getId(btn.id)
+                    }).then(function(data) {
+                        alert(data);
+                    });
+                }
+            );
+        }
+    </script>
+</body>
+
+</html>

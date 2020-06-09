@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>register</title>
+    <style>
+        * {
+            transition: all 0.4s;
+        }
+
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background-color: #fefefe;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            color: #666;
+            scroll-behavior: smooth;
+            font-size: 110%;
+        }
+
+        form {
+            margin-top: 100px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #title {
+            font-size: 200%;
+            margin-bottom: 20px;
+            ;
+        }
+
+        .input {
+            font-size: large;
+            color: #666;
+            width: 240px;
+            border: none;
+            outline: none;
+            border-bottom: #666 2px solid;
+            margin-right: 40px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        input:focus {
+            border-bottom: rgb(255, 87, 87) 2px solid;
+        }
+
+        .field {
+            margin: 10px;
+            /* background-color: salmon; */
+            display: flex;
+
+            justify-content: space-evenly;
+        }
+
+        .error-msg {
+            display: flex;
+            flex-direction: column;
+            border-radius: 5px;
+            background-color: rgb(255, 87, 87);
+            color: white;
+            padding: 10px;
+            margin: 10px;
+        }
+
+        #submit {
+            border: none;
+            cursor: pointer;
+            font-size: 95%;
+            outline: none;
+            background-color: white;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            /* background-color: rgb(255, 87, 87); */
+        }
+
+        label {
+            display: inline-block;
+            width: 80px;
+            text-align: right;
+            margin-right: 10px;
+            /* background-color: thistle; */
+        }
+
+        .link {
+            color: #666;
+            cursor: pointer;
+        }
+
+        .link:hover {
+            color: rgb(255, 87, 87);
+        }
+
+        #error-msg-title {
+            font-size: 120%;
+        }
+
+        #log-in {
+            color: rgb(255, 87, 87);
+        }
+
+        #back-home {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+
+        a {
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="back-home"><a class="link" th:href="@{/}">Home</a></div>
+    <form method="post" th:object="${registrationForm}" id="register-form">
+        <span id="title">Register</span>
+
+        <span id="register-link">Already got an account? <a class="link" id="log-in" th:href="@{/login}">log
+                in</a>!</span>
+
+        <div th:if="${error}" class="error-msg">
+            <span th:text="${error}">RESULT ERROR</span>
+        </div>
+        <div th:if="${#fields.hasErrors()}" class="error-msg">
+            <span id="error-msg-title">Please correct the mistakes and resubmit!</span>
+            <span th:if="${#fields.hasErrors('name')}"
+                      th:errors="*{name}" class="error">name error</span>
+            <span th:if="${#fields.hasErrors('email')}"
+                      th:errors="*{email}" class="error">EMAIL ERROR</span>
+            <span th:if="${#fields.hasErrors('password')}"
+                      th:errors="*{password}" class="error">PASSWORD ERROR</span>
+            <span th:if="${registrationForm.password ne registrationForm.confirm}" class="error">
+                    passwords don't match.</span>
+        </div>
+
+    <div class="field">
+        <label for="name">Name</label>
+        <input class="input" type="text" th:field="*{name}"/>
+       
+    </div>
+    <div class="field">
+        <label for="email">Email</label>
+        <input class="input" type="text" th:field="*{email}"/>
+        
+    </div>
+    <div class="field">
+        <label for="password">Password</label>
+        <input class="input" type="password" th:field="*{password}"/>
+       
+    </div>
+
+    <div class="field">
+        <label for="confirm">Confirm</label>
+        <input class="input" type="password" th:field="*{confirm}"/>
+        
+    </div>
+
+    <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+    <div class="field" id="submit-container">
+        <input type="submit" value="Register!" id="submit" class="link"/>
+    </div>
+</form>
+</body>
+</html>
