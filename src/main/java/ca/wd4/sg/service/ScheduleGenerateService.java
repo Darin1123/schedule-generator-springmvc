@@ -67,9 +67,9 @@ public class ScheduleGenerateService {
             String lecTimeDetail = lecNum==-1?"":course.getLecs().get(lecNum);
             String tutTimeDetail = tutNum==-1?"":course.getTuts().get(tutNum);
             String labTimeDetail = labNum==-1?"":course.getLabs().get(labNum);
-            result.addAll(getTimeDetails(name, lecTimeDetail, counter, "lec"+lecNum+1));
-            result.addAll(getTimeDetails(name, tutTimeDetail, counter, "tut"+tutNum+1));
-            result.addAll(getTimeDetails(name, labTimeDetail, counter, "lab"+labNum+1));
+            result.addAll(getTimeDetails(name, lecTimeDetail, counter, "lec"+(lecNum+1)));
+            result.addAll(getTimeDetails(name, tutTimeDetail, counter, "tut"+(tutNum+1)));
+            result.addAll(getTimeDetails(name, labTimeDetail, counter, "lab"+(labNum+1)));
         }
         return result;
     }
