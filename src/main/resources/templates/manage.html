@@ -183,7 +183,7 @@
             background-color: #f6f6f6;
             padding: 10px;
             border-radius: 5px;
-
+            justify-content: space-between;
         }
 
         .text {
@@ -346,23 +346,25 @@
                 </form>
                 <div id="courses">
                     <div th:id="'course'+${course.id}" class="course" th:each="course: ${courses}">
-                        <div class="basic-info">
-                            <span th:text="${course.name}">COURSE</span>
-                            <span th:text="${course.term}" class="text">TERM</span>
-                            <span th:text="'@'+${course.authorName}" class="text author-name">@AUTHOR</span>
-                            <span th:text="${course.star}">STAR</span>
-                        </div>
-                        <div class="sections" th:each="lec, iter: ${course.lecs}">
-                            <div class="section-title" th:text="'Lec '+${iter.index+1}">LEC #</div>
-                            <div class="small-text" th:text="${lec}">LEC INFO</div>
-                        </div>
-                        <div class="sections" th:each="tut, iter: ${course.tuts}">
-                            <div class="section-title" th:text="'Tut '+${iter.index+1}">TUT #</div>
-                            <div class="small-text" th:text="${tut}">TUT INFO</div>
-                        </div>
-                        <div class="sections" th:each="lab, iter: ${course.labs}">
-                            <div class="section-title" th:text="'Lab '+${iter.index+1}">LAB #</div>
-                            <div class="small-text" th:text="${lab}">LAB INFO</div>
+                        <div>
+                            <div class="basic-info">
+                                <span th:text="${course.name}">COURSE</span>
+                                <span th:text="${course.term}" class="text">TERM</span>
+                                <span th:text="'@'+${course.authorName}" class="text author-name">@AUTHOR</span>
+                                <span th:text="${course.star}">STAR</span>
+                            </div>
+                            <div class="sections" th:each="lec, iter: ${course.lecs}">
+                                <div class="section-title" th:text="'Lec '+${iter.index+1}">LEC #</div>
+                                <div class="small-text" th:text="${lec}">LEC INFO</div>
+                            </div>
+                            <div class="sections" th:each="tut, iter: ${course.tuts}">
+                                <div class="section-title" th:text="'Tut '+${iter.index+1}">TUT #</div>
+                                <div class="small-text" th:text="${tut}">TUT INFO</div>
+                            </div>
+                            <div class="sections" th:each="lab, iter: ${course.labs}">
+                                <div class="section-title" th:text="'Lab '+${iter.index+1}">LAB #</div>
+                                <div class="small-text" th:text="${lab}">LAB INFO</div>
+                            </div>
                         </div>
 
                         <div class="options">

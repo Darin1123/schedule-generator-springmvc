@@ -13,4 +13,11 @@ public class TimeTest {
         Assert.assertTrue(!time1.hasConflict(time2));
     }
 
+    @Test
+    public void conflictTest2() {
+        Time time1 = new Time(4, 8, 30, 9, 20);
+        Time time2 = new Time(4, 8, 30, 9, 20);
+        Assert.assertTrue(time1.hasConflict(time2));
+    }
+
 }

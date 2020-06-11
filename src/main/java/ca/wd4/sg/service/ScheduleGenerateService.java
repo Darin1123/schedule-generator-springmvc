@@ -26,10 +26,14 @@ public class ScheduleGenerateService {
         List<List<CourseInfo>> allSchedules = new ArrayList<>();
         Set<Long> keys = courseInfoMap.keySet();
         for (Long id : keys) {
+//            System.out.println("should be once");
+//            System.out.println("### id: "+id);
             List<CourseInfo> courseInfos = courseInfoMap.get(id);
+//            System.out.println("### courseInfos: "+courseInfos);
             List<List<CourseInfo>> temp = new ArrayList<>();
             if (allSchedules.isEmpty()) {
                 for (CourseInfo courseInfo: courseInfos) {
+//                    System.out.println("should also be once");
                     List<CourseInfo> schedule = new ArrayList<>();
                     schedule.add(courseInfo);
                     allSchedules.add(schedule);
@@ -63,9 +67,9 @@ public class ScheduleGenerateService {
             String lecTimeDetail = lecNum==-1?"":course.getLecs().get(lecNum);
             String tutTimeDetail = tutNum==-1?"":course.getTuts().get(tutNum);
             String labTimeDetail = labNum==-1?"":course.getLabs().get(labNum);
-            result.addAll(getTimeDetails(name, lecTimeDetail, counter, "lec"+lecNum));
-            result.addAll(getTimeDetails(name, tutTimeDetail, counter, "tut"+tutNum));
-            result.addAll(getTimeDetails(name, labTimeDetail, counter, "lab"+labNum));
+            result.addAll(getTimeDetails(name, lecTimeDetail, counter, "lec"+lecNum+1));
+            result.addAll(getTimeDetails(name, tutTimeDetail, counter, "tut"+tutNum+1));
+            result.addAll(getTimeDetails(name, labTimeDetail, counter, "lab"+labNum+1));
         }
         return result;
     }
@@ -143,11 +147,13 @@ public class ScheduleGenerateService {
             this.courseMap.put(course.getId(), course);
             List<CourseInfo> courseInfos = generateCourseInfos(course);
             // filter out the conflict combinations
-            courseInfos = filterOutInvalid(courseInfos);
+//            courseInfos = filterOutInvalid(courseInfos);
+            courseInfos = courseInfos.stream().filter(courseInfo -> !hasConflict(courseInfo)).collect(Collectors.toList());
+//            System.out.println("### courseInfos: "+courseInfos);
             if (isEmpty(courseInfos)) {
                 throw new EmptyCourseException("course "+course.getId()+" "+course.getName()+" contains no sections."); //there is a course with no class ==> invalid input
             }
-            courseInfoMap.put(course.getId(), generateCourseInfos(course));
+            courseInfoMap.put(course.getId(), courseInfos);
         }
     }
 
@@ -264,16 +270,11 @@ public class ScheduleGenerateService {
 
     public static void main(String[] args) throws EmptyCourseException {
         CourseBasic course1 = new CourseBasic(1, "a",
-                Arrays.asList("Mo 08:30-09:20", "We 12:30-13:20"),
-                Arrays.asList("Tu 10:30-11:20"),
-                new ArrayList<>());
-        CourseBasic course2 = new CourseBasic(2, "b",
-                Arrays.asList("We 08:30-09:20"),
-                Arrays.asList("Th 10:30-11:20"),
+                Arrays.asList("MoTu 08:30-09:20", "We 12:30-13:20"),
+                Arrays.asList("Tu 08:30-09:20"),
                 new ArrayList<>());
         ScheduleGenerateService service = new ScheduleGenerateService();
-        List<List<CourseInfo>> schedules =  service.generateSchedules(Arrays.asList(course1, course2));
-        System.out.println("** result number of schedules: "+ schedules.size());
+        List<List<CourseInfo>> schedules =  service.generateSchedules(Arrays.asList(course1));
         System.out.println("** result schedules: " + schedules);
         List<ClassDetail> table = service.getTable(schedules.get(0));
         System.out.println("** table1: "+table);
