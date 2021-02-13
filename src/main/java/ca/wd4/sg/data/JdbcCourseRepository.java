@@ -121,7 +121,7 @@ public class JdbcCourseRepository implements CourseRepository {
         String name = (String) info.get("name");
         Long authorId = (Long) info.get("author_id");
         //find author name from user table
-        String authorName = jdbc.queryForObject("select name from user where id = ?", (rs, i)->rs.getString("name"), authorId);
+        String authorName = jdbc.queryForObject("select name from users where id = ?", (rs, i)->rs.getString("name"), authorId);
         String term = (String) info.get("term");
         int star = (int) info.get("star");
 
@@ -235,7 +235,7 @@ public class JdbcCourseRepository implements CourseRepository {
             int star = (int) map.get("star");
 
             //get author name from user table
-            String authorName = jdbc.queryForObject("select name from user where id = ?", (rs, i)->rs.getString("name"), authorId);
+            String authorName = jdbc.queryForObject("select name from users where id = ?", (rs, i)->rs.getString("name"), authorId);
 
             //get section information from course
             List<String> lecs = getSection(id, 1);

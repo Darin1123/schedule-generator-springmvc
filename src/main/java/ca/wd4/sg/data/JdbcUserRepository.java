@@ -29,7 +29,7 @@ public class JdbcUserRepository implements UserRepository {
     public JdbcUserRepository(JdbcTemplate jdbc) {
         this.jdbc = jdbc;
         this.insert = new SimpleJdbcInsert(jdbc)
-                .withTableName("user")
+                .withTableName("users")
                 .usingColumns("name", "email", "password")
                 .usingGeneratedKeyColumns("id");
         this.mapper = new ObjectMapper();
@@ -38,7 +38,7 @@ public class JdbcUserRepository implements UserRepository {
 
     @Override
     public User findOneByEmail(String email) throws EmptyResultDataAccessException {
-        return jdbc.queryForObject("select id, name, email, password from user where email = ?",
+        return jdbc.queryForObject("select id, name, email, password from users where email = ?",
                     this::mapToUser, email);
     }
 
@@ -64,16 +64,16 @@ public class JdbcUserRepository implements UserRepository {
 
     @Override
     public void updateName(User user, String newName) {
-        jdbc.update("update user set name=? where email=?", newName, user.getEmail());
+        jdbc.update("update users set name=? where email=?", newName, user.getEmail());
     }
 
     @Override
     public void updatePassword(User user, String newPwd) {
-        jdbc.update("update user set password=? where email=?", encoder.encode(newPwd), user.getEmail());
+        jdbc.update("update users set password=? where email=?", encoder.encode(newPwd), user.getEmail());
     }
 
     @Override
     public void remove(User user) {
-        jdbc.update("delete from user where email=?", user.getEmail());
+        jdbc.update("delete from users where email=?", user.getEmail());
     }
 }
